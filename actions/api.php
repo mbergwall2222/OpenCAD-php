@@ -343,23 +343,7 @@ function setTone()
         die('Could not connect: ' .mysql_error());
     }
 
-    $sql = "UPDATE tones SET active = ? WHERE name = ?";
-
-    try {
-        $stmt = mysqli_prepare($link, $sql);
-        mysqli_stmt_bind_param($stmt, "ss", $status, $tone);
-        $result = mysqli_stmt_execute($stmt);
-
-        if ($result == FALSE) {
-            die(mysqli_error($link));
-        }
-    }
-    catch (Exception $e)
-    {
-        die("Failed to run query: " . $e->getMessage()); //TODO: A function to send me an email when this occurs should be made
-    }
-
-    mysqli_close($link);
+    mysqli_query($link,"UPDATE tones SET active = '$status' WHERE name = '$tone'");
 
     if ($action == "start")
     {
